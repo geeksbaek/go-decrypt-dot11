@@ -2,17 +2,15 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/google/gopacket"
-	"github.com/google/gopacket/pcap"
 )
 
 var (
 	snaplen = 2048
 	timeout = time.Millisecond * 1000
-	err     error
-	handle  *pcap.Handle
 )
 
 func main() {
@@ -22,6 +20,8 @@ func main() {
 
 	packetSource := gopacket.NewPacketSource(handle, handle.LinkType())
 	for packet := range packetSource.Packets() {
-		fmt.Println(packet)
+		// Process packet here
+		re := regexp.MustCompile(`\W`)
+		fmt.Println(re.ReplaceAllString(string(packet.Data()), "."))
 	}
 }

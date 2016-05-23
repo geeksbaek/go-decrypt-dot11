@@ -53,7 +53,7 @@ func getPcapHandle(device string) *pcap.Handle {
 		log.Fatal(err)
 	}
 
-	handle, err = inactive.Activate()
+	handle, err := inactive.Activate()
 	if err != nil {
 		log.Fatal(err)
 	}
