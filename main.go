@@ -46,16 +46,16 @@ func main() {
 
 			case layers.LayerTypeRadioTap:
 				log.Println("RadioTap Length :", len(radioTap.Contents))
-				dump(radioTap.LayerContents())
+				// dump(radioTap.LayerContents())
 
 			case layers.LayerTypeDot11:
 				log.Println("Dot11 Length :", len(dot11.Contents))
-				dump(dot11.LayerContents())
+				// dump(dot11.LayerContents())
 
 			case layers.LayerTypeDot11WEP:
 				log.Println("Dot11WEP Length :", len(dot11WEPLayer.Contents))
 				dump(dot11WEPLayer.LayerContents())
-
+				DecryptWEP(dot11WEPLayer, "")
 			}
 		}
 
