@@ -1,10 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/google/gopacket/pcap"
+)
+
+var (
+	snaplen = 2048
+	timeout = time.Millisecond * 1000
 )
 
 func getDeviceFromConsole() pcap.Interface {
@@ -59,4 +66,18 @@ func getPcapHandle(device string) *pcap.Handle {
 	}
 
 	return handle
+}
+
+func dump(_bytes []byte) {
+	var b bytes.Buffer
+	for i := range _bytes {
+		fmt.Fprintf(&b, "%02x ", _bytes[i])
+		i := i + 1
+		if i != 0 && i%16 == 0 {
+			fmt.Fprintf(&b, "\n")
+		} else if i != 0 && i%8 == 0 {
+			fmt.Fprintf(&b, " ")
+		}
+	}
+	fmt.Println(b.String())
 }
