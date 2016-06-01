@@ -14,9 +14,9 @@ var (
 	dot11WEPLayer layers.Dot11WEP
 )
 
-const (
-	WEPTestkey = "12345"
-	WPATestKey = "qwertyuiop123"
+var (
+	WEPTestkey = []byte("12345")
+	WPATestKey = []byte("qwertyuiop123")
 )
 
 // !(wlan.fc.type_subtype == 0x08)
@@ -54,8 +54,12 @@ func main() {
 
 			case layers.LayerTypeDot11WEP:
 				log.Println("Dot11WEP Length :", len(dot11WEPLayer.Contents))
-				dump(dot11WEPLayer.LayerContents())
-				DecryptWEP(dot11WEPLayer, "")
+				// dump(dot11WEPLayer.LayerContents())
+				Decrpyt(&Data{
+					EncryptedData: dot11WEPLayer.LayerContents(),
+					Key:           WEPTestkey,
+					Proto:         ProtoWEP,
+				})
 			}
 		}
 
